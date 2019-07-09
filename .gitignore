@@ -34,3 +34,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Proto1/Assets/TestAnne.unity
+Proto1/ProjectSettings/UnityConnectSettings.asset
