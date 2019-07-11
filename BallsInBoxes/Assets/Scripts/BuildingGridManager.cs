@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildingGridManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class BuildingGridManager : MonoBehaviour
 
     public Vector3[,] buildingGridLocal = new Vector3[3, 3];
     Vector3 startPos = new Vector3(-104, 0,-104);
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,24 +37,32 @@ public class BuildingGridManager : MonoBehaviour
         buildingGridLocal[0, 2] = new Vector3(hitBlockPosition.x - 10, 0, hitBlockPosition.z + 10);
         buildingGridLocal[1, 2] = new Vector3(hitBlockPosition.x , 0, hitBlockPosition.z + 10);
         buildingGridLocal[2, 2] = new Vector3(hitBlockPosition.x + 10, 0, hitBlockPosition.z + 10);
-        Debug.Log("BuildingGridBuild");
         return buildingGridLocal;
     }
     
     public Vector3 ClosestGridPosition(Vector3 hitpoint,Vector3[,] hitGrid)
     {
-        Vector3 firstPosition = hitGrid[0,0];
-        Vector3 closest = hitGrid[0, 0];
+        //bug werkt alleen voor de naastliggenden (dus1,3,5,7)
+        //wat voor nu prima is
+        //als hitpoint niet een blokje is dan is waarde 0,0,0,0(dus raycast raaktniks)
+        List<float> distances = new List<float>();
+        List<Vector3> positions = new List<Vector3>();
         foreach ( Vector3 gridPosition in hitGrid)
         {
-            //je moet de middelste negeren daarom werkt dit niet(degene die je klikt dus haha);
-            //het werkt zowiezo nog niet :(
-            if (Vector3.Distance(firstPosition, hitpoint) > Vector3.Distance(gridPosition, hitpoint))
-            {
-                closest = gridPosition;
-            }
+            distances.Add(Vector3.Distance(gridPosition, hitpoint));
+            positions.Add(gridPosition);
         }
-        return closest;
+        distances[4] = 10000;
+        int closestIndex = distances.IndexOf(distances.Min());
+        if(closestIndex == 4)
+        {
+            Debug.Log("closestindex=4");
+        }
+        if(positions[closestIndex] == new Vector3(0, 0, 0))
+        {
+            Debug.Log("dat is poep");
+        }
+        return positions[closestIndex];
     }
 
     void SpawnAlphaGrid()

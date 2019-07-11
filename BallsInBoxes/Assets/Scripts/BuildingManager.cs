@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
+    //editor variablen
     //pointless
     [SerializeField]
     CameraMovement playerCamera;
@@ -13,13 +14,16 @@ public class BuildingManager : MonoBehaviour
     [SerializeField]
     SquarePlatformGhost squarePlatformGhostClass;
 
-    Vector3 point,point2;
-    Vector3 hitPosition;
+    //states
+    public bool buildFloorMode = false;
+    public bool buildWallMode = false;
 
-    SquarePlatform platformToBePlaced;
+    Vector3 hitPosition;
 
     BuildingGridManager buildingGridManager = new BuildingGridManager();
     Vector3[,] localBuildingGrid;
+
+    SquarePlatformGhost ghostBlock;
 
     // Start is called before the first frame update
     void Start()
@@ -31,53 +35,73 @@ public class BuildingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         
+        BuildFloorModeExecution();
+        
+
+        //oude spawnshizzle
         if (Input.GetMouseButtonDown(0)) //check if the LMB is clicked
         {
-            RaycastHit hit;
-            Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-        
-            if (Physics.Raycast(ray, out hit)) //check if the ray hit something
-            {
-                hitPosition = hit.point; //use this position for what you want to do
-                localBuildingGrid = buildingGridManager.SpawnLocalSnappingGrid(hit.transform.position);
-                SpawnGhost(hit.point);
-                Debug.Log(hit.transform.position);
-                Debug.Log(hitPosition);
-            }
+            Instantiate(squarePlatformClass, ghostBlock.transform.position, new Quaternion(0, 0, 0, 0));
         }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-             SpawnPlatform();
-        if (platformToBePlaced != null)
-            platformToBePlaced.transform.position = hitPosition;
         
-        point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        point2 = Camera.main.transform.position;
         
     }
 
     void SpawnGhost(Vector3 hitPosition)
     {
-        Instantiate(squarePlatformGhostClass, buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid),new Quaternion(0,0,0,0));
+        ghostBlock = Instantiate(squarePlatformGhostClass, buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid),new Quaternion(0,0,0,0));
     }
-
-    void TestBuildingGrid()
-    {
-        foreach(Vector3 position in localBuildingGrid)
-        {
-            Instantiate(squarePlatformGhostClass, position, new Quaternion(0, 0, 0, 0));
-        }
-    }
-
-    void SpawnPlatform()
-    {
-        platformToBePlaced = Instantiate(squarePlatformClass, point,new Quaternion(0,0,0,0));
-        Instantiate(squarePlatformClass, point, new Quaternion(0, 0, 0, 0));
-    }
+    
     void SpawnBox()
     {
         
     }
+
+    //state execution
+    void BuildFloorModeExecution()
+    {
+        RaycastHit hit;
+        Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit)) //check if the ray hit something
+        {
+            //dit ff beter op basis van heeft het de component squareplatform
+            if (hit.collider.gameObject.GetComponent<SquarePlatform>()!=null)
+            {
+                hitPosition = hit.point; //use this position for what you want to do
+                localBuildingGrid = buildingGridManager.SpawnLocalSnappingGrid(hit.transform.position);
+                if (ghostBlock == null)
+                    SpawnGhost(hit.point);
+                else
+                    ghostBlock.gameObject.transform.position = buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid);
+                Debug.Log(hit.collider);
+            }
+        }
+        
+    }
+
+    void BuildWallModeExecution()
+    {
+
+    }
+
+    //state switching
+    public void SwitchToFloorBuildMode()
+    {
+        buildFloorMode = true;
+        buildWallMode = false;
+    }
+    public void SwitchToWallBuildMode()
+    {
+        buildWallMode = true;
+        buildFloorMode = false;
+    }
+    //trash
+    //void TestBuildingGrid()
+    //{
+    //    foreach (Vector3 position in localBuildingGrid)
+    //    {
+    //        Instantiate(squarePlatformGhostClass, position, new Quaternion(0, 0, 0, 0));
+    //    }
+    //}
 }

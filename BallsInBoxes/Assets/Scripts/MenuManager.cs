@@ -49,4 +49,14 @@ public class MenuManager : MonoBehaviour
     {
         ballText.text = "Balls: "+GameState.Instance.Player.Balls.ToString();
     }
+
+    public void SwitchToFloorMode()
+    {
+
+    }
+
+    public void SwitchToWallMode()
+    {
+
+    }
 }

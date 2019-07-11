@@ -17,9 +17,7 @@ public class GameState : MonoBehaviour
     public BuildingManager BuildingManager;
     [SerializeField]
     public CameraMovement PlayerCamera;
-
-    // Start is called before the first frame update
-
+    
     private static GameState instance;
     public static GameState Instance
     {
