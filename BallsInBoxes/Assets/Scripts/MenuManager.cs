@@ -52,11 +52,16 @@ public class MenuManager : MonoBehaviour
 
     public void SwitchToFloorMode()
     {
-
+        GameState.Instance.BuildingManager.SwitchToFloorBuildMode();
     }
 
     public void SwitchToWallMode()
     {
+        GameState.Instance.BuildingManager.SwitchToWallBuildMode();
+    }
 
+    public void StopBuilding()
+    {
+        GameState.Instance.BuildingManager.SwitchToStopBuilding();
     }
 }

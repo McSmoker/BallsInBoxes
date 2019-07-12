@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SquarePlatform : MonoBehaviour
+public class SquarePlatformWall : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,8 +13,6 @@ public class SquarePlatform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
-
-    
 }

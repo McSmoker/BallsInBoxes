@@ -45,7 +45,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 655954846913790631, guid: 477cb71db0824134e9f256c480613513,
     type: 3}
-  squarePlatformClass: {fileID: 7793949080565601473, guid: 0c32c07d2ea0e654daaaf8e7bf5c643d,
+  SquarePlatformFloorClass: {fileID: 7793949080565601473, guid: 0c32c07d2ea0e654daaaf8e7bf5c643d,
     type: 3}
-  squarePlatformGhostClass: {fileID: 5118537972240234361, guid: 022e7077d9425264880456863c528715,
+  SquarePlatformWallClass: {fileID: 3379401895758068560, guid: 464a2ad40b083bf4d837ea7cb1966f7a,
     type: 3}
+  SquarePlatformFloorGhostClass: {fileID: 5118537972240234361, guid: 022e7077d9425264880456863c528715,
+    type: 3}
+  SquarePlatformWallGhostClass: {fileID: 4947770870902236223, guid: b11db64614ac512479e5d1e1dad4c9ea,
+    type: 3}
+  buildFloorMode: 0
+  buildWallMode: 0

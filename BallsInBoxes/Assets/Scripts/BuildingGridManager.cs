@@ -1,17 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BuildingGridManager : MonoBehaviour
 {
-    Vector3[,] buildingGrid = new Vector3[22, 22];
-
-    public Vector3[,] buildingGridLocal = new Vector3[3, 3];
     Vector3 startPos = new Vector3(-104, 0,-104);
-
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,22 +20,72 @@ public class BuildingGridManager : MonoBehaviour
         
     }
 
-    public Vector3[,] SpawnLocalSnappingGrid(Vector3 hitBlockPosition)
+    public Vector3[,] SpawnLocalFloorSnappingGrid(Vector3 hitBlockPosition)
     {
+        Vector3[,] buildingGridLocal = new Vector3[3, 3];
         //loool das wel beetje vies
-        buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x - 10, 0 ,hitBlockPosition.z- 10);
-        buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x , 0, hitBlockPosition.z - 10);
-        buildingGridLocal[2, 0] = new Vector3(hitBlockPosition.x + 10, 0, hitBlockPosition.z - 10);
-        buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x - 10, 0, hitBlockPosition.z);
-        //middelpunt(dus degene die je raakt!
+        //basically pak de positie van geraakte block en plak allemogelijkheden in een array
+        buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y, hitBlockPosition.z- 10);
+        buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x , hitBlockPosition.y, hitBlockPosition.z - 10);
+        buildingGridLocal[2, 0] = new Vector3(hitBlockPosition.x + 10, hitBlockPosition.y, hitBlockPosition.z - 10);
+        buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y, hitBlockPosition.z);
+        //middelpunt(dus degene die je raakt![1,1]
         //
-        buildingGridLocal[2, 1] = new Vector3(hitBlockPosition.x + 10, 0, hitBlockPosition.z);
-        buildingGridLocal[0, 2] = new Vector3(hitBlockPosition.x - 10, 0, hitBlockPosition.z + 10);
-        buildingGridLocal[1, 2] = new Vector3(hitBlockPosition.x , 0, hitBlockPosition.z + 10);
-        buildingGridLocal[2, 2] = new Vector3(hitBlockPosition.x + 10, 0, hitBlockPosition.z + 10);
+        buildingGridLocal[1, 1] = new Vector3(hitBlockPosition.x + 1000, 1000, hitBlockPosition.z+1000);
+
+
+        buildingGridLocal[2, 1] = new Vector3(hitBlockPosition.x + 10, hitBlockPosition.y, hitBlockPosition.z);
+        buildingGridLocal[0, 2] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y, hitBlockPosition.z + 10);
+        buildingGridLocal[1, 2] = new Vector3(hitBlockPosition.x , hitBlockPosition.y, hitBlockPosition.z + 10);
+        buildingGridLocal[2, 2] = new Vector3(hitBlockPosition.x + 10, hitBlockPosition.y, hitBlockPosition.z + 10);
         return buildingGridLocal;
     }
-    
+
+    public Vector3[,] SpawnLocalWallToFloorSnappingGrid(Vector3 hitBlockPosition,bool southRotation)
+    {
+        Vector3[,] buildingGridLocal = new Vector3[2,2];
+        if (southRotation)
+        {
+            //onder voor
+            buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y - 5, hitBlockPosition.z - 5);
+            //boven voor
+            buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z - 5);
+            //onder achter
+            buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y - 5, hitBlockPosition.z + 5);
+            //boven achter 
+            buildingGridLocal[1, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z + 5);
+        }
+        else
+        {
+            //onder voor
+            buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x , hitBlockPosition.y , hitBlockPosition.z );
+            //boven voor
+            buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z );
+            //onder achter
+            buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x, hitBlockPosition.y - 5, hitBlockPosition.z );
+            //boven achter 
+            buildingGridLocal[1, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z );
+        }
+        return buildingGridLocal;
+
+    }
+
+    public Vector3[,] SpawnLocalWallSnappingGrid(Vector3 hitBlockPosition)
+    {
+        Vector3[,] wallBuildingGrid = new Vector3[2, 2];
+        //loool das wel beetje vies
+        //basically pak de positie van geraakte block en plak allemogelijkheden in een array
+        //s-wall
+        wallBuildingGrid[0, 0] = new Vector3(hitBlockPosition.x, hitBlockPosition.y +5, hitBlockPosition.z - 5);
+        //w-wall
+        wallBuildingGrid[0, 1] = new Vector3(hitBlockPosition.x-5, hitBlockPosition.y + 5, hitBlockPosition.z);
+        //e-wall
+        wallBuildingGrid[1, 0] = new Vector3(hitBlockPosition.x + 5, hitBlockPosition.y + 5, hitBlockPosition.z);
+        //n-wall
+        wallBuildingGrid[1, 1] = new Vector3(hitBlockPosition.x , hitBlockPosition.y + 5, hitBlockPosition.z+5);
+        return wallBuildingGrid;
+    }
+
     public Vector3 ClosestGridPosition(Vector3 hitpoint,Vector3[,] hitGrid)
     {
         //bug werkt alleen voor de naastliggenden (dus1,3,5,7)
@@ -52,21 +98,23 @@ public class BuildingGridManager : MonoBehaviour
             distances.Add(Vector3.Distance(gridPosition, hitpoint));
             positions.Add(gridPosition);
         }
-        distances[4] = 10000;
+        //distances[4] = 10000;
         int closestIndex = distances.IndexOf(distances.Min());
-        if(closestIndex == 4)
-        {
-            Debug.Log("closestindex=4");
-        }
-        if(positions[closestIndex] == new Vector3(0, 0, 0))
-        {
-            Debug.Log("dat is poep");
-        }
+        //oude bug zuig me anus
+        //if(closestIndex == 4)
+        //{
+        //    Debug.Log("closestindex=4");
+        //}
+        //if(positions[closestIndex] == new Vector3(0, 0, 0))
+        //{
+        //    Debug.Log("dat is poep");
+        //}
         return positions[closestIndex];
     }
 
     void SpawnAlphaGrid()
     {
+        Vector3[,] buildingGrid = new Vector3[22, 22];
         for (int i = 0; i < 22; i++)
         {
             for (int i2 = 0; i2 < 22; i2++)
@@ -79,4 +127,5 @@ public class BuildingGridManager : MonoBehaviour
         Debug.Log("wuuuuut");
     }
 
+    
 }
