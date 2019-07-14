@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3406496790053473729}
   - component: {fileID: 7722965863282046970}
   - component: {fileID: 3379401895758068560}
+  - component: {fileID: 976234756922002975}
   m_Layer: 0
   m_Name: SquarePlatformWall
   m_TagString: Untagged
@@ -104,3 +105,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abe4397d757ee14692ae04a7206377a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  southRotation: 0
+  westRotation: 0
+--- !u!208 &976234756922002975
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224771121701313424}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

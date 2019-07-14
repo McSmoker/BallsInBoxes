@@ -41,30 +41,30 @@ public class BuildingGridManager : MonoBehaviour
         return buildingGridLocal;
     }
 
-    public Vector3[,] SpawnLocalWallToFloorSnappingGrid(Vector3 hitBlockPosition,bool southRotation)
+    public Vector3[,] SpawnLocalWallToFloorSnappingGrid(SquarePlatformWall hitWall, Vector3 hitBlockPosition,bool southRotation)
     {
         Vector3[,] buildingGridLocal = new Vector3[2,2];
-        if (southRotation)
+        if (hitWall.southRotation)
         {
             //onder voor
-            buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y - 5, hitBlockPosition.z - 5);
+            buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x, hitBlockPosition.y - 5, hitBlockPosition.z - 5);
             //boven voor
             buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z - 5);
             //onder achter
-            buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x - 10, hitBlockPosition.y - 5, hitBlockPosition.z + 5);
+            buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x , hitBlockPosition.y - 5, hitBlockPosition.z + 5);
             //boven achter 
             buildingGridLocal[1, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z + 5);
         }
         else
         {
             //onder voor
-            buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x , hitBlockPosition.y , hitBlockPosition.z );
+            buildingGridLocal[0, 0] = new Vector3(hitBlockPosition.x-5 , hitBlockPosition.y - 5 , hitBlockPosition.z);
             //boven voor
-            buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z );
+            buildingGridLocal[0, 1] = new Vector3(hitBlockPosition.x-5, hitBlockPosition.y + 5, hitBlockPosition.z );
             //onder achter
-            buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x, hitBlockPosition.y - 5, hitBlockPosition.z );
+            buildingGridLocal[1, 0] = new Vector3(hitBlockPosition.x+5, hitBlockPosition.y - 5, hitBlockPosition.z);
             //boven achter 
-            buildingGridLocal[1, 1] = new Vector3(hitBlockPosition.x, hitBlockPosition.y + 5, hitBlockPosition.z );
+            buildingGridLocal[1, 1] = new Vector3(hitBlockPosition.x+5, hitBlockPosition.y + 5, hitBlockPosition.z );
         }
         return buildingGridLocal;
 

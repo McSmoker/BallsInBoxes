@@ -68,10 +68,12 @@ public class BuildingManager : MonoBehaviour
                 if (southRotation)
                 {
                     wall.transform.rotation = southRotationQuaternion;
+                    wall.southRotation = true;
                 }
                 else if (westRotation)
                 {
                     wall.transform.rotation = westRotationQuaternion;
+                    wall.westRotation = true;
                 }
             }
         }
@@ -121,7 +123,7 @@ public class BuildingManager : MonoBehaviour
             if (hit.collider.gameObject.GetComponent<SquarePlatformWall>() != null)
             {
                 hitPosition = hit.point; //use this position for what you want to do
-                localBuildingGrid = buildingGridManager.SpawnLocalWallToFloorSnappingGrid(hit.transform.position,southRotation);
+                localBuildingGrid = buildingGridManager.SpawnLocalWallToFloorSnappingGrid(hit.transform.GetComponent<SquarePlatformWall>(),hit.transform.position,southRotation);
                 if (ghostBlockFloor == null)
                     SpawnGhost(hit.point);
                 else
@@ -162,7 +164,6 @@ public class BuildingManager : MonoBehaviour
                         ghostBlockWall.gameObject.transform.Rotate(new Vector3(-90, 0, 0));
                         ghostBlockWall.gameObject.transform.rotation = southRotationQuaternion;
                         southRotation = true;
-                        Debug.Log("Rotate for X");
                     }
                     else if (buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid).z == hitObject.position.z)
                     {
@@ -171,7 +172,6 @@ public class BuildingManager : MonoBehaviour
                         ghostBlockWall.gameObject.transform.Rotate(new Vector3(0, 0,-90));
                         ghostBlockWall.gameObject.transform.rotation = westRotationQuaternion;
                         westRotation = true;
-                        Debug.Log("Rotate for Z");
                     }
                 }
                 //platform is verplaatst maar fout gedraaid(oude draai)
