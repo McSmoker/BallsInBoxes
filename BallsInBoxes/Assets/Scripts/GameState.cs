@@ -17,6 +17,10 @@ public class GameState : MonoBehaviour
     public BuildingManager BuildingManager;
     [SerializeField]
     public CameraMovement PlayerCamera;
+    [SerializeField]
+    public CollectableManager CollectableManager;
+    [SerializeField]
+    public EnemyManager EnemyManager;
     
     private static GameState instance;
     public static GameState Instance
@@ -34,6 +38,10 @@ public class GameState : MonoBehaviour
         BuildingManager.transform.parent = this.transform;
         PlayerCamera = Instantiate(PlayerCamera, instance.transform);
         PlayerCamera.transform.parent = this.transform;
+        CollectableManager = Instantiate(CollectableManager,instance.transform);
+        CollectableManager.transform.parent = this.transform;
+        EnemyManager = Instantiate(EnemyManager, instance.transform);
+        EnemyManager.transform.parent = this.transform;
     }
 
     // Update is called once per frame

@@ -20,6 +20,8 @@ public class BuildingManager : MonoBehaviour
     SquarePlatformWallGhost SquarePlatformWallGhostClass;
     [SerializeField]
     Spawner spawnerClass;
+    [SerializeField]
+    Startarea startareaClass;
 
     //states
     public bool buildFloorMode = false;
@@ -45,7 +47,7 @@ public class BuildingManager : MonoBehaviour
     void Start()
     {
         playerCamera = GameState.Instance.PlayerCamera;
-        SpawnBox();
+        SpawnStartArea();
     }
 
     // Update is called once per frame
@@ -54,15 +56,16 @@ public class BuildingManager : MonoBehaviour
         if (buildFloorMode)
         {
             BuildFloorModeExecution();
-            if (Input.GetMouseButtonDown(0)) //check if the LMB is clicked
+            if (Input.GetKeyDown(KeyCode.Q)) //check if the Q is clicked
             {
-                Instantiate(SquarePlatformFloorClass, ghostBlockFloor.transform.position, new Quaternion(0, 0, 0, 0));
+                SquarePlatformFloor floor = Instantiate(SquarePlatformFloorClass, ghostBlockFloor.transform.position, new Quaternion(0, 0, 0, 0));
+                GameState.Instance.Player.FloorsList.Add(floor);
             }
         }
         else if (buildWallMode)
         {
             BuildWallModeExecution();
-            if (Input.GetMouseButtonDown(0)) //check if the LMB is clicked
+            if (Input.GetKeyDown(KeyCode.Q)) //check if the Q is clicked
             {
                 SquarePlatformWall wall = Instantiate(SquarePlatformWallClass, ghostBlockWall.transform.position, new Quaternion(0, 0, 0, 0));
                 if (southRotation)
@@ -75,6 +78,7 @@ public class BuildingManager : MonoBehaviour
                     wall.transform.rotation = westRotationQuaternion;
                     wall.westRotation = true;
                 }
+                GameState.Instance.Player.WallsList.Add(wall);
             }
         }
         else
@@ -97,9 +101,9 @@ public class BuildingManager : MonoBehaviour
             ghostBlockFloor = Instantiate(SquarePlatformFloorGhostClass, buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid), new Quaternion(0, 0, 0, 0));
     }
 
-    void SpawnBox()
+    void SpawnStartArea()
     {
-
+        Instantiate(startareaClass, new Vector3(0, 5, 0), new Quaternion(0, 0, 0, 0));
     }
 
     //state executions

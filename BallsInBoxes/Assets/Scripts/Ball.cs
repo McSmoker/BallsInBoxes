@@ -13,8 +13,7 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.y < -7)
-        {
+       {
             Clean();
             GameState.Instance.Player.Balls--;
         }
@@ -22,8 +21,9 @@ public class Ball : MonoBehaviour
 
     public void Clean()
     {
-        GameState.Instance.Player.BallList.Remove(this);
-        GameState.Instance.Player.BallList.TrimExcess();
+          if (this.transform.position.y < -7)
+        //GameState.Instance.Player.BallList.Remove(this);
+        //GameState.Instance.Player.BallList.TrimExcess();
         Destroy(this.gameObject);
     }
 }

@@ -1,0 +1,41 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SquarePlatformFloorSpawner : MonoBehaviour
+{
+
+    [SerializeField]
+    Collectable CollectableClass;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine("SpawnCollectableEvery2Seconds");
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    IEnumerator SpawnCollectableEvery2Seconds()
+    {
+        while (true)
+        {
+            SpawnCollectable();
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
+    public void SpawnCollectable()
+    {
+        Vector3 randomdirection = new Vector3(Random.Range(0, 500), Random.Range(0, 0), Random.Range(0, 500));
+        Collectable ball = Instantiate(CollectableClass, this.transform.position + new Vector3(0,1,0), new Quaternion(0, 0, 0, 0));
+        //ball.GetComponent<Rigidbody>().AddForce(randomdirection);
+        ball.GetComponent<Rigidbody>().AddForce(this.transform.up * 500);
+        GameState.Instance.Player.CollectablesList.Add(ball);
+    }
+}

@@ -98,17 +98,8 @@ public class BuildingGridManager : MonoBehaviour
             distances.Add(Vector3.Distance(gridPosition, hitpoint));
             positions.Add(gridPosition);
         }
-        //distances[4] = 10000;
         int closestIndex = distances.IndexOf(distances.Min());
-        //oude bug zuig me anus
-        //if(closestIndex == 4)
-        //{
-        //    Debug.Log("closestindex=4");
-        //}
-        //if(positions[closestIndex] == new Vector3(0, 0, 0))
-        //{
-        //    Debug.Log("dat is poep");
-        //}
+        
         return positions[closestIndex];
     }
 

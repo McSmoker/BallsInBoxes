@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallClass: {fileID: 331244295363895791, guid: 95f77cfa514f3724aba1939f9747fa29,
     type: 3}
+  CollectableClass: {fileID: 7238845595473170255, guid: 545bff3ef54ae1a46a8c6d04a9aee823,
+    type: 3}
   Barrel: {fileID: 252752349318083598}
 --- !u!1 &6914776181328466541
 GameObject:
