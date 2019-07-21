@@ -13,24 +13,26 @@ public class BuildingManager : MonoBehaviour
     CameraMovement playerCamera;
     //niet pointless(things om te spawnen)
     [SerializeField]
-    SquarePlatformFloor SquarePlatformFloorClass;
+    Floor SquarePlatformFloorClass;
     [SerializeField]
-    SquarePlatformWall SquarePlatformWallClass;
+    Wall SquarePlatformWallClass;
     [SerializeField]
-    SquarePlatformFloorGhost SquarePlatformFloorGhostClass;
+    FloorGhost SquarePlatformFloorGhostClass;
     [SerializeField]
-    SquarePlatformWallGhost SquarePlatformWallGhostClass;
+    WallGhost SquarePlatformWallGhostClass;
     [SerializeField]
     BuildingStorage BuildingStorageClass;
     [SerializeField]
     BuildingStorageGhost BuildingStorageGhostClass;
+    [SerializeField]
+    public StartArea StartArea;
     //tijdelijk?
     [SerializeField]
     ExpellUnitsBlock ExpellUnitsBlockClass;
     [SerializeField]
     Spawner spawnerClass;
     [SerializeField]
-    public Startarea startareaClass;
+    public DebugArea DebugArea;
 
     //states
     public bool buildFloorMode = false;
@@ -45,10 +47,12 @@ public class BuildingManager : MonoBehaviour
     Vector3 hitPosition;
     Vector3[,] localBuildingGrid;
     Transform hitObject;
-
-    SquarePlatformFloorGhost ghostBlockFloor;
-    SquarePlatformWallGhost ghostBlockWall;
+    //buildings
+    FloorGhost ghostBlockFloor;
+    WallGhost ghostBlockWall;
     BuildingStorageGhost ghostStorageBuilding;
+    Floor floorUnderConstruction;
+    Wall wallToDestroy;
 
     ExpellUnitsBlock expellUnitsElevator;
 
@@ -61,7 +65,19 @@ public class BuildingManager : MonoBehaviour
     void Start()
     {
         playerCamera = GameState.Instance.PlayerCamera;
-        SpawnStartArea();
+        if (!GameState.Instance.IsDemo)
+        {
+            SpawnDebugArea();
+        }
+        else
+        {
+            SpawnStartArea();
+        }
+    }
+
+    private void SpawnStartArea()
+    {
+        StartArea = Instantiate(StartArea, new Vector3(-30, 0, -15), new Quaternion(0, 0, 0, 0));
     }
 
     // Update is called once per frame
@@ -72,17 +88,17 @@ public class BuildingManager : MonoBehaviour
             BuildFloorModeExecution();
             if (Input.GetKeyDown(KeyCode.Q)) //check if the Q is clicked
             {
-                SquarePlatformFloor floor = Instantiate(SquarePlatformFloorClass, ghostBlockFloor.transform.position, new Quaternion(0, 0, 0, 0));
+                Floor floor = Instantiate(SquarePlatformFloorClass, ghostBlockFloor.transform.position, new Quaternion(0, 0, 0, 0));
                 GameState.Instance.Player.FloorsList.Add(floor);
             }
-            
+
         }
         else if (buildWallMode)
         {
             BuildWallModeExecution();
             if (Input.GetKeyDown(KeyCode.Q)) //check if the Q is clicked
             {
-                SquarePlatformWall wall = Instantiate(SquarePlatformWallClass, ghostBlockWall.transform.position, new Quaternion(0, 0, 0, 0));
+                Wall wall = Instantiate(SquarePlatformWallClass, ghostBlockWall.transform.position, new Quaternion(0, 0, 0, 0));
                 if (southRotation)
                 {
                     wall.transform.rotation = southRotationQuaternion;
@@ -95,21 +111,48 @@ public class BuildingManager : MonoBehaviour
                 }
                 GameState.Instance.Player.WallsList.Add(wall);
             }
-            
+
         }
         else if (buildBuildingMode)
         {
             BuildBuildingExecution();
             if (Input.GetKeyDown(KeyCode.Q)) //check if the Q is clicked
             {
+                Destroy(floorUnderConstruction.gameObject);
                 BuildingStorage buildingStorage = Instantiate(BuildingStorageClass, ghostStorageBuilding.transform.position, new Quaternion(0, 0, 0, 0));
-                Vector3 floorposition = buildingStorage.GetComponentInChildren<SquarePlatformFloor>().gameObject.transform.position;
-                expellUnitsElevator = Instantiate(ExpellUnitsBlockClass, floorposition+new Vector3(0,0.5f,0), new Quaternion(0, 0, 0, 0));
-                
+                Vector3 floorposition = buildingStorage.GetComponentInChildren<Floor>().gameObject.transform.position;
+                expellUnitsElevator = Instantiate(ExpellUnitsBlockClass, floorposition + new Vector3(0, 0.5f, 0), new Quaternion(0, 0, 0, 0));
+
             }
+        }
+        else if (buildBulldozeMode)
+        {
+            //maak apart als dit allemaan weg gaat hier
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit)) //check if the ray hit something
+                {
+
+                    //wall hit
+                    if (hit.collider.gameObject.GetComponent<Wall>() != null)
+                    {
+                        wallToDestroy = hit.collider.gameObject.GetComponent<Wall>();
+                        //verander de wal van kleur
+                        Debug.Log("Verander wall van kleur exception");
+                    }
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Q)) //check if the Q is clicked
+            {
+                Destroy(wallToDestroy.gameObject);
+            }
+            
         }
         else
         {
+            //takes care of all ghosts;
             if (ghostBlockFloor != null)
                 Destroy(ghostBlockFloor.gameObject);
             if (ghostBlockWall != null)
@@ -118,7 +161,6 @@ public class BuildingManager : MonoBehaviour
                 Destroy(ghostStorageBuilding.gameObject);
         }
     }
-
 
     void SpawnGhost(Vector3 hitPosition)
     {
@@ -135,9 +177,9 @@ public class BuildingManager : MonoBehaviour
             ghostBlockFloor = Instantiate(SquarePlatformFloorGhostClass, buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid), new Quaternion(0, 0, 0, 0));
     }
 
-    void SpawnStartArea()
+    void SpawnDebugArea()
     {
-        startareaClass = Instantiate(startareaClass, new Vector3(-30, 0, -15), new Quaternion(0, 0, 0, 0));
+        DebugArea = Instantiate(DebugArea, new Vector3(-30, 0, -15), new Quaternion(0, 0, 0, 0));
     }
 
     //state executions
@@ -150,14 +192,15 @@ public class BuildingManager : MonoBehaviour
             Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit)) //check if the ray hit something
             {
-                //empty floor hit
-                if (hit.collider.gameObject.GetComponent<SquarePlatformFloor>() != null)
+                
+                //floor hit
+                if (hit.collider.gameObject.GetComponent<Floor>() != null)
                 {
-                    SquarePlatformFloor floor = hit.collider.gameObject.GetComponent<SquarePlatformFloor>();
+                    floorUnderConstruction = hit.collider.gameObject.GetComponent<Floor>();
                     if (ghostStorageBuilding == null)
-                        SpawnGhost(floor.transform.position);
+                        SpawnGhost(floorUnderConstruction.transform.position);
                     else
-                        ghostStorageBuilding.transform.position = floor.transform.position;
+                        ghostStorageBuilding.transform.position = floorUnderConstruction.transform.position;
                 }
             }
         }
@@ -169,7 +212,7 @@ public class BuildingManager : MonoBehaviour
         Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit)) //check if the ray hit something
         {
-            if (hit.collider.gameObject.GetComponent<SquarePlatformFloor>() != null)
+            if (hit.collider.gameObject.GetComponent<Floor>() != null)
             {
                 hitPosition = hit.point; //use this position for what you want to do
                 localBuildingGrid = buildingGridManager.SpawnLocalFloorSnappingGrid(hit.transform.position);
@@ -179,10 +222,10 @@ public class BuildingManager : MonoBehaviour
                     ghostBlockFloor.gameObject.transform.position = buildingGridManager.ClosestGridPosition(hitPosition, localBuildingGrid);
 
             }
-            if (hit.collider.gameObject.GetComponent<SquarePlatformWall>() != null)
+            if (hit.collider.gameObject.GetComponent<Wall>() != null)
             {
                 hitPosition = hit.point; //use this position for what you want to do
-                localBuildingGrid = buildingGridManager.SpawnLocalWallToFloorSnappingGrid(hit.transform.GetComponent<SquarePlatformWall>(),hit.transform.position,southRotation);
+                localBuildingGrid = buildingGridManager.SpawnLocalWallToFloorSnappingGrid(hit.transform.GetComponent<Wall>(),hit.transform.position,southRotation);
                 if (ghostBlockFloor == null)
                     SpawnGhost(hit.point);
                 else
@@ -201,7 +244,7 @@ public class BuildingManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit)) //check if the ray hit something
         {
-            if (hit.collider.gameObject.GetComponent<SquarePlatformFloor>() != null)
+            if (hit.collider.gameObject.GetComponent<Floor>() != null)
             {
                 //verzamelen waardes
                 hitPosition = hit.point; //use this position for what you want to do

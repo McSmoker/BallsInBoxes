@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
-    //gebruikt voor debug knoppen
-    [SerializeField]
-    public Spawner SpawnerClass;
-
+    public bool IsDemo = false;
     //essentials
     [SerializeField]
     public MenuManager MenuManager;
@@ -21,8 +19,10 @@ public class GameState : MonoBehaviour
     public CollectableManager CollectableManager;
     [SerializeField]
     public EnemyManager EnemyManager;
-    //[SerializeField]
-    //public UnitManager UnitManager;
+    [SerializeField]
+    public TileManager TileManager;
+    [SerializeField]
+    public GameMenuManager GameMenuManager;
 
 
     private static GameState instance;
@@ -32,19 +32,43 @@ public class GameState : MonoBehaviour
     }
     void Start()
     {
-        instance = this;
-        MenuManager = Instantiate(MenuManager, instance.transform);
-        MenuManager.transform.parent = this.transform;
-        BuildingManager = Instantiate(BuildingManager, instance.transform);
-        BuildingManager.transform.parent = this.transform;
-        PlayerCamera = Instantiate(PlayerCamera, instance.transform);
-        PlayerCamera.transform.parent = this.transform;
-        CollectableManager = Instantiate(CollectableManager,instance.transform);
-        CollectableManager.transform.parent = this.transform;
-        EnemyManager = Instantiate(EnemyManager, instance.transform);
-        EnemyManager.transform.parent = this.transform;
-        Player = Instantiate(Player, instance.transform);
-        Player.transform.parent = this.transform;
+        if (SceneManager.GetActiveScene().name == "Demo")
+        {
+            instance = this;
+            IsDemo = true;
+            GameMenuManager = Instantiate(GameMenuManager, instance.transform);
+            GameMenuManager.transform.parent = this.transform;
+            BuildingManager = Instantiate(BuildingManager, instance.transform);
+            BuildingManager.transform.parent = this.transform;
+            PlayerCamera = Instantiate(PlayerCamera, instance.transform);
+            PlayerCamera.transform.parent = this.transform;
+            CollectableManager = Instantiate(CollectableManager, instance.transform);
+            CollectableManager.transform.parent = this.transform;
+            EnemyManager = Instantiate(EnemyManager, instance.transform);
+            EnemyManager.transform.parent = this.transform;
+            Player = Instantiate(Player, instance.transform);
+            Player.transform.parent = this.transform;
+            TileManager = Instantiate(TileManager, instance.transform);
+            TileManager.transform.parent = this.transform;
+        }
+        else
+        {
+            instance = this;
+            MenuManager = Instantiate(MenuManager, instance.transform);
+            MenuManager.transform.parent = this.transform;
+            BuildingManager = Instantiate(BuildingManager, instance.transform);
+            BuildingManager.transform.parent = this.transform;
+            PlayerCamera = Instantiate(PlayerCamera, instance.transform);
+            PlayerCamera.transform.parent = this.transform;
+            CollectableManager = Instantiate(CollectableManager, instance.transform);
+            CollectableManager.transform.parent = this.transform;
+            EnemyManager = Instantiate(EnemyManager, instance.transform);
+            EnemyManager.transform.parent = this.transform;
+            Player = Instantiate(Player, instance.transform);
+            Player.transform.parent = this.transform;
+            TileManager = Instantiate(TileManager, instance.transform);
+            TileManager.transform.parent = this.transform;
+        }
     }
 
     // Update is called once per frame

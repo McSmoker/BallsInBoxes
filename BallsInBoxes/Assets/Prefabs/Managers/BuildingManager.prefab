@@ -57,11 +57,13 @@ MonoBehaviour:
     type: 3}
   BuildingStorageGhostClass: {fileID: 5658007363575626816, guid: a00b66b55d7ae934480d7f52fdfeafa1,
     type: 3}
+  StartArea: {fileID: 5104823319698726713, guid: 30361ba53fdf44f4e8bc3eb6903593bc,
+    type: 3}
   ExpellUnitsBlockClass: {fileID: 3546535272556462995, guid: 2156ea3586da0024db29244da2f2f122,
     type: 3}
   spawnerClass: {fileID: 5752735278690052012, guid: edaa888dc4f547643933dfe5ae666125,
     type: 3}
-  startareaClass: {fileID: 1387106204218971910, guid: 56f93dc6452a8b746a7ac7311a142658,
+  DebugArea: {fileID: 1387106204218971910, guid: 56f93dc6452a8b746a7ac7311a142658,
     type: 3}
   buildFloorMode: 0
   buildWallMode: 0

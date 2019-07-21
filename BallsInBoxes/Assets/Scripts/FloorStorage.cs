@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartArea : MonoBehaviour
+public class FloorStorage : Floor
 {
     // Start is called before the first frame update
     void Start()

@@ -15,10 +15,7 @@ public class Unit : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
     }
-
-
     
-
     public Unit GetClosestUnit(List<Unit> units, Vector3 enemyPosition)
     {
         List<float> distances = new List<float>();
@@ -52,9 +49,34 @@ public class Unit : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //kill unit methode is vies
         if (collision.other.GetComponent<Bullet>())
         {
-            Debug.Log("hit by bullet");
+            Bullet bullet = collision.other.GetComponent<Bullet>();
+            if (bullet.isDeadly)
+            {
+                if (GetComponent<Enemy>())
+                {
+                    if (!bullet.isEnemyBullet)
+                    {
+                        GameState.Instance.EnemyManager.EnemyList.Remove(GetComponent<Enemy>());
+                        Destroy(this.gameObject);
+                    }
+                }
+                else
+                {
+                    if (bullet.isEnemyBullet)
+                    {
+                        GameState.Instance.Player.UnitList.Remove(this);
+                        Destroy(this.gameObject);
+                    }
+                }
+                //Destroy(this.gameObject);
+            }
+            else
+            {
+                Debug.Log("hit by safe bullet");
+            }
         }
     }
 }

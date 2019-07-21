@@ -19,7 +19,10 @@ public class Enemy : Unit
     // Update is called once per frame
     void Update()
     {
-        targetPosition = GetClosestUnit(GameState.Instance.Player.UnitList, transform.position).transform.position;
+        if (GameState.Instance.Player.UnitList.Count != 0)
+        {
+            targetPosition = GetClosestUnit(GameState.Instance.Player.UnitList, transform.position).transform.position;
+        }
         agent.destination = targetPosition;
     }
 
@@ -37,6 +40,7 @@ public class Enemy : Unit
         //direction
         Vector3 dir = targetPosition - transform.position;
         Bullet bullet = Instantiate(BulletClass, this.transform.position + this.transform.forward, new Quaternion(0, 0, 0, 0));
+        bullet.isEnemyBullet = true;
         bullet.GetComponent<Rigidbody>().AddForce(dir.normalized*500);
     }
 }

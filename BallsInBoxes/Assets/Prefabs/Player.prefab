@@ -46,6 +46,7 @@ MonoBehaviour:
   Balls: 0
   Cannons: 0
   CurrencyGold: 0
+  CurrencyBullet: 0
   SpawnerClass: {fileID: 5752735278690052012, guid: edaa888dc4f547643933dfe5ae666125,
     type: 3}
   CollectorClass: {fileID: 201154026823839225, guid: ae31e212a8a8ec147b1e4c39c857a612,
@@ -58,16 +59,20 @@ MonoBehaviour:
     type: 3}
   GoldClass: {fileID: 1084574322321388843, guid: 708a18dc76cf4ee4293eaf118fcef2c9,
     type: 3}
+  BulletClass: {fileID: 4319974418281041994, guid: d1fc3d6e410a1f34cac3bc524cf8c0da,
+    type: 3}
   CollectablesList: []
-  CurrencyList: []
   GoldList: []
+  BulletList: []
   SoldierList: []
   CollectorsList: []
   AlchemistList: []
   UnitList: []
   IdleList: []
+  OriginalSpawnPosition: {x: -3, y: 2.25, z: 10}
   FloorsList: []
   WallsList: []
+  BuildingStorageList: []
   DropOffList: []
   CostOfFloor: 10
   CostOfWall: 1

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuildingStorage : Building
 {
+    public int storageMaximum = 100;
+    public int storageCurrent;
     // Start is called before the first frame update
     void Start()
     {

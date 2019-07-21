@@ -19,6 +19,6 @@ public class ExpellUnitsBlock : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         Destroy(gameObject);
-        yield return null;
+        yield return false;
     }
 }

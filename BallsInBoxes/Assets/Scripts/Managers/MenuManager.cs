@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +12,11 @@ public class MenuManager : MonoBehaviour
     Text ballText, BuyWall, BuyFloor, BuyCollector;
     [SerializeField]
     Text idleAssignment, collectorAssignment, soldierAssignment, alchemistAssignment;
+    [SerializeField]
+    Text tileTitle, tileDescription,tileSpecial;
     //easy canvas acces
     [SerializeField]
-    Canvas debugCanvas, buildWorldCanvas, buildUnitsCanvas,buildBuildingCanvas;
+    Canvas debugCanvas, buildWorldCanvas, buildUnitsCanvas,buildBuildingCanvas,unitAssignmentCanvas,tileDescriptionCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,7 @@ public class MenuManager : MonoBehaviour
 
     public void RefreshAllTexts()
     {
-        ballText.text = "Balls: " + GameState.Instance.Player.CurrencyGold.ToString();
+        ballText.text = "Balls: " + GameState.Instance.Player.CurrencyGold.ToString() + "\nBullets: " + GameState.Instance.Player.CurrencyBullet.ToString();
         BuyWall.text = "Wall Cost: " + GameState.Instance.Player.CostOfWall.ToString();
         BuyFloor.text = "Floor Cost: " + GameState.Instance.Player.CostOfFloor.ToString();
         BuyCollector.text = "Collector Cost: " + GameState.Instance.Player.CostOfCollector.ToString();
@@ -38,6 +41,26 @@ public class MenuManager : MonoBehaviour
         soldierAssignment.text = "Soldier: " + GameState.Instance.Player.SoldierList.Count + "/" + GameState.Instance.Player.UnitList.Count;
         alchemistAssignment.text = "Alchemist: " + GameState.Instance.Player.AlchemistList.Count + "/" + GameState.Instance.Player.UnitList.Count;
 
+    }
+
+    public void UpdateTileDescription(GameObject gameObject)
+    {
+
+        if (gameObject.GetComponent<FloorStorage>())
+        {
+            BuildingStorage storage = gameObject.GetComponentInParent<BuildingStorage>();
+            tileDescriptionCanvas.gameObject.SetActive(true);
+            tileTitle.text = "Storage";
+            tileDescription.text = "This building stores all your resources";
+            tileSpecial.text = "Storage "+storage.storageCurrent+"/100";
+        }
+        else if (gameObject.GetComponent<Floor>())
+        {
+            tileDescriptionCanvas.gameObject.SetActive(true);
+            tileTitle.text = "Empty";
+            tileDescription.text = "Nothing is Here";
+            tileSpecial.text = "You can build here";
+        }
     }
 
     //buttonaction
@@ -61,7 +84,6 @@ public class MenuManager : MonoBehaviour
     {
         GameState.Instance.Player.HandleUnitAssignment(clicked);
     }
-
 
     public void OnClickSwitchToDebugTab()
     {
@@ -94,6 +116,11 @@ public class MenuManager : MonoBehaviour
         buildBuildingCanvas.gameObject.SetActive(true);
     }
 
+    public void OnClickCloseTileDescriptionTab()
+    {
+        tileDescriptionCanvas.gameObject.SetActive(false);
+    }
+
     //building Modes
 
     public void SwitchToFloorMode()
@@ -114,6 +141,11 @@ public class MenuManager : MonoBehaviour
     public void SwitchToBuildingMode()
     {
         GameState.Instance.BuildingManager.SwitchToBuildingBuildMode();
+    }
+
+    public void SwitchToBulldozeMode()
+    {
+        GameState.Instance.BuildingManager.SwitchToBulldozeMode();
     }
 }
     //legacy code dode buttons

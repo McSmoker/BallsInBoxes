@@ -20,7 +20,10 @@ public class Soldier : Unit
 
     void Update()
     {
-        targetPosition = GetClosestEnemy(GameState.Instance.EnemyManager.EnemyList, transform.position).transform.position;
+        if (GameState.Instance.EnemyManager.EnemyList.Count != 0)
+        {
+            targetPosition = GetClosestEnemy(GameState.Instance.EnemyManager.EnemyList, transform.position).transform.position;
+        }
         ///waat check hoe vies dit is maar is het sneller???
         agent.destination = targetPosition;
     }
@@ -41,6 +44,9 @@ public class Soldier : Unit
         //direction
         Vector3 dir = targetPosition - transform.position;
         Bullet bullet = Instantiate(BulletClass, this.transform.position + this.transform.forward, new Quaternion(0, 0, 0, 0));
+        //hoe de fuck doe je constructors
         bullet.GetComponent<Rigidbody>().AddForce(dir.normalized * 500);
+        bullet.isEnemyBullet = false;
+        bullet.StartCoroutine("CoolDown");
     }
 }

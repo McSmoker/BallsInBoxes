@@ -304,6 +304,8 @@ MonoBehaviour:
     type: 3}
   EnemyManager: {fileID: 4673291480969279913, guid: 8a93d76c09117d14babcf02636163ee8,
     type: 3}
+  TileManager: {fileID: 1485219448016865703, guid: 51131c3cd98576049b3dca4b6530fc6d,
+    type: 3}
 --- !u!4 &1380648523
 Transform:
   m_ObjectHideFlags: 0
@@ -358,7 +360,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1465445219}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2

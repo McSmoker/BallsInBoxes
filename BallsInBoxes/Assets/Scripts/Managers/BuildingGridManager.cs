@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BuildingGridManager : MonoBehaviour
+public class BuildingGridManager
 {
     //deze  class handelt alleen SpawningGrids voor het shittie bouwsysteem
-    Vector3 startPos = new Vector3(-104, 0,-104);
+    //Vector3 startPos = new Vector3(-104, 0,-104);
     
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,7 @@ public class BuildingGridManager : MonoBehaviour
         return buildingGridLocal;
     }
 
-    public Vector3[,] SpawnLocalWallToFloorSnappingGrid(SquarePlatformWall hitWall, Vector3 hitBlockPosition,bool southRotation)
+    public Vector3[,] SpawnLocalWallToFloorSnappingGrid(Wall hitWall, Vector3 hitBlockPosition,bool southRotation)
     {
         Vector3[,] buildingGridLocal = new Vector3[2,2];
         if (hitWall.southRotation)
@@ -104,20 +104,20 @@ public class BuildingGridManager : MonoBehaviour
         return positions[closestIndex];
     }
 
-    void SpawnAlphaGrid()
-    {
-        Vector3[,] buildingGrid = new Vector3[22, 22];
-        for (int i = 0; i < 22; i++)
-        {
-            for (int i2 = 0; i2 < 22; i2++)
-            {
-                buildingGrid[i, i2] = startPos;
-                startPos += new Vector3(i2, 0, 0);
-            }
-            startPos += new Vector3(0, 0, i);
-        }
-        Debug.Log("wuuuuut");
-    }
+    //void SpawnAlphaGrid()
+    //{
+    //    Vector3[,] buildingGrid = new Vector3[22, 22];
+    //    for (int i = 0; i < 22; i++)
+    //    {
+    //        for (int i2 = 0; i2 < 22; i2++)
+    //        {
+    //            buildingGrid[i, i2] = startPos;
+    //            startPos += new Vector3(i2, 0, 0);
+    //        }
+    //        startPos += new Vector3(0, 0, i);
+    //    }
+    //    Debug.Log("wuuuuut");
+    //}
 
     
 }

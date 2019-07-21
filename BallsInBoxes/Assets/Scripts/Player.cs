@@ -6,10 +6,12 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    //currency
+    //nutteloos verwijder
     public int Balls;
     public int Cannons;
+    //currency
     public int CurrencyGold;
+    public int CurrencyBullet;
     //things to spawn
     [SerializeField]
     Spawner SpawnerClass;
@@ -25,11 +27,14 @@ public class Player : MonoBehaviour
     //currency
     [SerializeField]
     Gold GoldClass;
+    [SerializeField]
+    Bullet BulletClass;
     
 
     //CurrencyLists
     public List<Collectable> CollectablesList;
     public List<Gold> GoldList;
+    public List<Bullet> BulletList;
 
     //unit Lists
     public List<Soldier> SoldierList;
@@ -42,8 +47,8 @@ public class Player : MonoBehaviour
 
 
 
-    public List<SquarePlatformFloor> FloorsList;
-    public List<SquarePlatformWall> WallsList;
+    public List<Floor> FloorsList;
+    public List<Wall> WallsList;
     public List<BuildingStorage> BuildingStorageList;
 
     
@@ -58,10 +63,39 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        if (GameState.Instance.IsDemo)
+        {
 
+            OriginalSpawnPosition = GameState.Instance.BuildingManager.StartArea.transform.position + new Vector3(0, 2, 0);
+            StartDemo();
+        }
     }
 
-    public void AddGoldToStorage()
+    private void StartDemo()
+    {
+        SpawnCollector();
+    }
+
+    internal void AddBulletToStorage(Bullet bullet)
+    {
+        Debug.Log("AddBulletToStorage not implemented");
+        BuildingStorage Storage;
+        if (BuildingStorageList != null)
+        {
+            Storage = BuildingStorageList[0];
+        }
+        else
+        {
+            Storage = GameState.Instance.BuildingManager.DebugArea.GetComponentInChildren<BuildingStorage>();
+        }
+        //bullet.transform.position = Storage.transform.position + new Vector3(UnityEngine.Random.Range(-4, 4), 5);
+        bullet = Instantiate(BulletClass, Storage.transform.position + new Vector3(UnityEngine.Random.Range(-4, 4), 5, UnityEngine.Random.Range(-4, 4)), new Quaternion(0, 0, 0, 0));
+        bullet.GetComponent<Rigidbody>().AddForce(new Vector3(1, 0, 1));
+        Storage.storageCurrent++;
+        GameState.Instance.Player.BulletList.Add(bullet);
+    }
+
+    public void AddGoldToStorage(Gold gold)
     {
         BuildingStorage Storage;
         if (BuildingStorageList != null)
@@ -70,17 +104,19 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Storage = GameState.Instance.BuildingManager.startareaClass.GetComponentInChildren<BuildingStorage>();
+            Storage = GameState.Instance.BuildingManager.DebugArea.GetComponentInChildren<BuildingStorage>();
         }
-        Gold gold = Instantiate(GoldClass,Storage.transform.position+new Vector3(UnityEngine.Random.Range(-4, 4), 5, UnityEngine.Random.Range(-4, 4)),new Quaternion(0,0,0,0));
+        //gold.transform.position = Storage.transform.position + new Vector3(UnityEngine.Random.Range(-4, 4), 5);
+        gold = Instantiate(GoldClass,Storage.transform.position+new Vector3(UnityEngine.Random.Range(-4, 4), 5, UnityEngine.Random.Range(-4, 4)),new Quaternion(0,0,0,0));
         gold.GetComponent<Rigidbody>().AddForce(new Vector3(1, 0, 1));
-        //GameState.Instance.Player.CurrencyList.Add(gold);
+        Storage.storageCurrent ++;
         GameState.Instance.Player.GoldList.Add(gold);
     }
 
     public void BuyIdle()
     {
-        OriginalSpawnPosition = GameState.Instance.BuildingManager.startareaClass.transform.position + new Vector3(0, 2, 0);
+        
+        OriginalSpawnPosition = GameState.Instance.BuildingManager.DebugArea.transform.position + new Vector3(0, 2, 0);
         if (CurrencyGold <= CostOfCollector)
         {
             Idle idle = Instantiate(IdleClass,OriginalSpawnPosition,new Quaternion(0,0,0,0));
@@ -96,7 +132,7 @@ public class Player : MonoBehaviour
 
     public void HandleUnitAssignment(string unit)
     {
-        //oh nee wat een kut oplossing
+        //oh nee wat een kut oplossing viez
         if(unit == "UpCollector")
         {
             Idle idle = IdleList[0];
@@ -164,40 +200,21 @@ public class Player : MonoBehaviour
         CurrencyGold -= CostOfFloor;
         CostOfFloor *= 2;
     }
-
-    //legacy code
-    private void AddCannonLocations()
-    {
-        CannonLocations = new List<Vector3>();
-        CannonLocations.Add(new Vector3(0, 10, 0));
-        CannonLocations.Add(new Vector3(0, 10, 10));
-        CannonLocations.Add(new Vector3(10, 10, 0));
-        CannonLocations.Add(new Vector3(10, 10, 0));
-    }
-    
-    internal void AddCannon()
-    {
-        Spawner Spawner = Instantiate(SpawnerClass, CannonLocations[Cannons - 1], new Quaternion(0, 0, 0, 0));
-        Spawner.transform.parent = this.transform;
-    }
-    //public void SpendBalls(int amount)
-    //{
-    //    for (int i = 0; i < amount; i++)
-    //    {
-    //        BallList[0].Clean();
-    //    }
-    //    Balls = Balls - amount;
-    //}    
-    //internal void BuyCannon()
-    //{
-    //    if (Balls >= 10)
-    //    {
-    //        if (Cannons < 4)
-    //        {
-    //            SpendBalls(10);
-    //            Cannons++;
-    //            AddCannon();
-    //        }
-    //    }
-    //}
 }
+#region LegacyCode
+//legacy code
+//private void AddCannonLocations()
+//{
+//    CannonLocations = new List<Vector3>();
+//    CannonLocations.Add(new Vector3(0, 10, 0));
+//    CannonLocations.Add(new Vector3(0, 10, 10));
+//    CannonLocations.Add(new Vector3(10, 10, 0));
+//    CannonLocations.Add(new Vector3(10, 10, 0));
+//}
+
+//internal void AddCannon()
+//{
+//    Spawner Spawner = Instantiate(SpawnerClass, CannonLocations[Cannons - 1], new Quaternion(0, 0, 0, 0));
+//    Spawner.transform.parent = this.transform;
+//}
+#endregion

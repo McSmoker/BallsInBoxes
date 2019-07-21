@@ -14,6 +14,7 @@ public class Collector : Unit
     bool goalSet;
     Collectable collected;
     Gold gold;
+    Bullet bullet;
 
     private void Start()
     {
@@ -45,13 +46,19 @@ public class Collector : Unit
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collide");
         if (!hasCollectable)
         {
             if (collision.gameObject.GetComponent<Gold>())
             {
                 gold = collision.gameObject.GetComponent<Gold>();
                 gold.Transporting(this);
+                hasCollectable = true;
+            }
+            else if (collision.gameObject.GetComponent<Bullet>())
+            {
+                Debug.Log("start collecting bullet");
+                bullet = collision.gameObject.GetComponent<Bullet>();
+                bullet.Transporting(this);
                 hasCollectable = true;
             }
         }
@@ -66,6 +73,16 @@ public class Collector : Unit
             {
                 gold.Collect();
                 hasCollectable = false;
+                //wat een viez
+                gold = null;
+            }
+            if (bullet != null)
+            {
+                bullet.Collect();
+                hasCollectable = false;
+                //wat een viez
+                bullet = null;
+
             }
         }
         else

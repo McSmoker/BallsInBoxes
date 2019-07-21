@@ -35,7 +35,10 @@ public class Gold : Collectable
     {
         GameState.Instance.Player.CurrencyGold++;
         if (GameState.Instance.Player.BuildingStorageList.Count != 0)
-            GameState.Instance.Player.AddGoldToStorage();
+        {
+            GameState.Instance.Player.AddGoldToStorage(this);
+            beingTransported = false;
+        }
         Clean();
     }
 

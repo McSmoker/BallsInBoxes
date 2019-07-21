@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2603611956528607605}
   - component: {fileID: 3374926523918902720}
   m_Layer: 0
-  m_Name: SquarePlatformFloorSpawner
+  m_Name: TileFloorSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b86e95cb69adad14286aea21f55e63ff, type: 2}
+  - {fileID: 2100000, guid: 8bf201d3a3254f947a3835ef8711ed07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
