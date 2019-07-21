@@ -16,10 +16,11 @@ public class Collectable : MonoBehaviour
     void Update()
     {
         if (beingTransported)
-        {
-            this.transform.position = transporter.transform.position + new Vector3(0,2,0);
+        { 
+            if(transporter!=null)
+                this.transform.position = transporter.transform.position + new Vector3(0,2,0);
         }
-        if (this.transform.position.y < -1)
+        if (this.transform.position.y < -5)
             Clean();
     }
 
@@ -32,14 +33,15 @@ public class Collectable : MonoBehaviour
     }
     public void Collect()
     {
-        GameState.Instance.Player.CurrencyBall++;
+        GameState.Instance.Player.CurrencyGold++;
+        if(GameState.Instance.Player.BuildingStorageList.Count!=0)
+            GameState.Instance.Player.AddGoldToStorage();
         Clean();
     }
 
     public void Clean()
     {
         GameState.Instance.Player.CollectablesList.Remove(this);
-        GameState.Instance.Player.CollectablesList.TrimExcess();
         Destroy(this.gameObject);
     }
 

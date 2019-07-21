@@ -45,16 +45,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Balls: 0
   Cannons: 0
-  CurrencyBall: 0
+  CurrencyGold: 0
   SpawnerClass: {fileID: 5752735278690052012, guid: edaa888dc4f547643933dfe5ae666125,
     type: 3}
   CollectorClass: {fileID: 201154026823839225, guid: ae31e212a8a8ec147b1e4c39c857a612,
     type: 3}
-  BallList: []
+  IdleClass: {fileID: 2826123019886018424, guid: 116250496653a1845bbb365bbd4d8fbf,
+    type: 3}
+  SoldierClass: {fileID: 4400283738094262251, guid: 226ede5bf5a26424dbefdb333ab2035a,
+    type: 3}
+  AlchemistClass: {fileID: 675525957105523445, guid: b4c5298a540f79e4b831f4a377bd58eb,
+    type: 3}
+  GoldClass: {fileID: 1084574322321388843, guid: 708a18dc76cf4ee4293eaf118fcef2c9,
+    type: 3}
   CollectablesList: []
+  CurrencyList: []
+  GoldList: []
+  SoldierList: []
   CollectorsList: []
+  AlchemistList: []
+  UnitList: []
+  IdleList: []
   FloorsList: []
   WallsList: []
+  DropOffList: []
   CostOfFloor: 10
   CostOfWall: 1
   CostOfCollector: 10

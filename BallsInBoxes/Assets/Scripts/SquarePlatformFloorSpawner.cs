@@ -26,6 +26,7 @@ public class SquarePlatformFloorSpawner : MonoBehaviour
         while (true)
         {
             SpawnCollectable();
+
             yield return new WaitForSeconds(2f);
         }
     }
@@ -33,7 +34,7 @@ public class SquarePlatformFloorSpawner : MonoBehaviour
     public void SpawnCollectable()
     {
         Vector3 randomdirection = new Vector3(Random.Range(0, 500), Random.Range(0, 0), Random.Range(0, 500));
-        Collectable ball = Instantiate(CollectableClass, this.transform.position + new Vector3(0,1,0), new Quaternion(0, 0, 0, 0));
+        Collectable ball = Instantiate(CollectableClass, this.transform.position + new Vector3(0,3,0), new Quaternion(0, 0, 0, 0));
         //ball.GetComponent<Rigidbody>().AddForce(randomdirection);
         ball.GetComponent<Rigidbody>().AddForce(this.transform.up * 500);
         GameState.Instance.Player.CollectablesList.Add(ball);

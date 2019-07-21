@@ -11,11 +11,13 @@ public class Collector : Unit
     Transform goal;
 
     bool hasCollectable;
+    bool goalSet;
     Collectable collected;
 
     private void Start()
     {
         GameState.Instance.Player.CollectorsList.Add(this);
+        GameState.Instance.Player.UnitList.Add(this);
     }
 
     // Update is called once per frame
@@ -23,11 +25,14 @@ public class Collector : Unit
     {
         if (hasCollectable)
         {
-            //resourceDropoffLowest
-            agent.destination = goal.position;
+            Debug.Log("has gold");
+            ResourceDropOff lol =  FindObjectOfType<ResourceDropOff>();
+            agent.SetDestination(lol.transform.position);
+            
         }
         else if (!hasCollectable)
         {
+            Debug.Log("find collectable");
             if (GameState.Instance.Player.CollectablesList.Count != 0)
             {
                 collectable = GameState.Instance.CollectableManager.GetClosestCollectable(GameState.Instance.Player.CollectablesList, this.transform.position);
@@ -57,5 +62,15 @@ public class Collector : Unit
             }
             hasCollectable = false;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //remove units from buildings
+        Debug.Log("unit is triggert");
+       GameState.Instance.Player.UnitList.Remove(this);
+       GameState.Instance.Player.CollectorsList.Remove(this.GetComponent<Collector>());
+       GameState.Instance.Player.SpawnCollector();
+       Destroy(gameObject);
     }
 }
