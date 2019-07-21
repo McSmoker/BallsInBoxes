@@ -130,5 +130,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b492b1dab08d046845d22b02bf8ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollectableClass: {fileID: 7238845595473170255, guid: 545bff3ef54ae1a46a8c6d04a9aee823,
+  CollectableClass: {fileID: 1084574322321388843, guid: 708a18dc76cf4ee4293eaf118fcef2c9,
     type: 3}

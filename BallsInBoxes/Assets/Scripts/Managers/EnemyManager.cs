@@ -12,7 +12,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        Instantiate(EnemyClass, this.transform);
+        Instantiate(EnemyClass, GameState.Instance.BuildingManager.startareaClass.transform.position,new Quaternion(0,0,0,0));
     }
 
     public Unit GetClosestUnit(List<Unit> units,Vector3 enemyPosition)

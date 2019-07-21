@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SquarePlatformFloorSpawner : MonoBehaviour
+public class SquarePlatformFloorSpawner : SquarePlatformFloor
 {
 
     [SerializeField]

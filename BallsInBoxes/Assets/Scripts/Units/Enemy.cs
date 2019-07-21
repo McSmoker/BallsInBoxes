@@ -25,7 +25,7 @@ public class Enemy : Unit
 
     IEnumerator ShootEvery2Sec()
     {
-        while (Vector3.Distance(this.transform.position, targetPosition) <= 10)
+        while (true)
         {
             Shoot();
             yield return new WaitForSeconds(2f);

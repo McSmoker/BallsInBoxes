@@ -64,6 +64,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SquarePlatformFloorSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3241977526547133456, guid: a1ed80b9843c9b24aa6fa60955a64b46,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3933947931864266866, guid: a1ed80b9843c9b24aa6fa60955a64b46,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -119,7 +124,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4827734210920443388, guid: a1ed80b9843c9b24aa6fa60955a64b46, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a1ed80b9843c9b24aa6fa60955a64b46, type: 3}
 --- !u!4 &7944114734339228326 stripped
 Transform:

@@ -49,4 +49,12 @@ public class Unit : MonoBehaviour
     {
         unitToReset.transform.position = GameState.Instance.Player.OriginalSpawnPosition;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.other.GetComponent<Bullet>())
+        {
+            Debug.Log("hit by bullet");
+        }
+    }
 }

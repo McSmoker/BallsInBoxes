@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
 
     //CurrencyLists
     public List<Collectable> CollectablesList;
-    public List<Currency> CurrencyList;
     public List<Gold> GoldList;
 
     //unit Lists
@@ -75,7 +74,7 @@ public class Player : MonoBehaviour
         }
         Gold gold = Instantiate(GoldClass,Storage.transform.position+new Vector3(UnityEngine.Random.Range(-4, 4), 5, UnityEngine.Random.Range(-4, 4)),new Quaternion(0,0,0,0));
         gold.GetComponent<Rigidbody>().AddForce(new Vector3(1, 0, 1));
-        GameState.Instance.Player.CurrencyList.Add(gold);
+        //GameState.Instance.Player.CurrencyList.Add(gold);
         GameState.Instance.Player.GoldList.Add(gold);
     }
 

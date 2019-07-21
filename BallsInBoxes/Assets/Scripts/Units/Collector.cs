@@ -13,11 +13,13 @@ public class Collector : Unit
     bool hasCollectable;
     bool goalSet;
     Collectable collected;
+    Gold gold;
 
     private void Start()
     {
         GameState.Instance.Player.CollectorsList.Add(this);
         GameState.Instance.Player.UnitList.Add(this);
+        //StartCoroutine("SetTarget");
     }
 
     // Update is called once per frame
@@ -25,52 +27,54 @@ public class Collector : Unit
     {
         if (hasCollectable)
         {
-            Debug.Log("has gold");
-            ResourceDropOff lol =  FindObjectOfType<ResourceDropOff>();
+            ResourceDropOff lol = FindObjectOfType<ResourceDropOff>();
             agent.SetDestination(lol.transform.position);
-            
+
         }
         else if (!hasCollectable)
         {
-            Debug.Log("find collectable");
             if (GameState.Instance.Player.CollectablesList.Count != 0)
             {
                 collectable = GameState.Instance.CollectableManager.GetClosestCollectable(GameState.Instance.Player.CollectablesList, this.transform.position);
-                agent.destination = collectable.transform.position;
+                agent.SetDestination(collectable.transform.position);
             }
         }
     }
+    
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collected == null)
+        Debug.Log("collide");
+        if (!hasCollectable)
         {
-            if (collision.gameObject.GetComponent<Collectable>())
+            if (collision.gameObject.GetComponent<Gold>())
             {
-                collected = collision.gameObject.GetComponent<Collectable>();
-                collected.Transporting(this);
+                gold = collision.gameObject.GetComponent<Gold>();
+                gold.Transporting(this);
                 hasCollectable = true;
             }
-        }
-        if (collision.gameObject.GetComponent<ResourceDropOff>())
-        {
-            //voorkomt gayass nullrefrence
-            if (collected != null)
-            {
-                collected.Collect();
-            }
-            hasCollectable = false;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //remove units from buildings
-        Debug.Log("unit is triggert");
-       GameState.Instance.Player.UnitList.Remove(this);
-       GameState.Instance.Player.CollectorsList.Remove(this.GetComponent<Collector>());
-       GameState.Instance.Player.SpawnCollector();
-       Destroy(gameObject);
+        if (other.gameObject.GetComponent<ResourceDropOff>())
+        {
+            //voorkomt gayass nullrefrence
+            if (gold != null)
+            {
+                gold.Collect();
+                hasCollectable = false;
+            }
+        }
+        else
+        {
+            //remove units from buildings
+            GameState.Instance.Player.UnitList.Remove(this);
+            GameState.Instance.Player.CollectorsList.Remove(this.GetComponent<Collector>());
+            GameState.Instance.Player.SpawnCollector();
+            Destroy(gameObject);
+        }
     }
 }
