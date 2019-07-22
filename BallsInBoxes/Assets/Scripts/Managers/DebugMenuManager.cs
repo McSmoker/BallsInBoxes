@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+public class DebugMenuManager : MonoBehaviour
 {
     //button texten
     [SerializeField]
@@ -45,6 +45,7 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateTileDescription(GameObject gameObject)
     {
+        //floor moet altijd als laatste want een tile is altijd een floor
 
         if (gameObject.GetComponent<FloorStorage>())
         {
@@ -54,6 +55,16 @@ public class MenuManager : MonoBehaviour
             tileDescription.text = "This building stores all your resources";
             tileSpecial.text = "Storage "+storage.storageCurrent+"/100";
         }
+        
+        else if (gameObject.GetComponent<FloorSpawner>())
+        {
+            
+            tileDescriptionCanvas.gameObject.SetActive(true);
+            tileTitle.text = "Fertile lands";
+            tileDescription.text = "This land is fertile and will spawn 1 gold everysecond";
+            tileSpecial.text = "Spawned: "+ gameObject.GetComponent<FloorSpawner>().spawned.ToString()+"/"+ gameObject.GetComponent<FloorSpawner>().amountToSpawn.ToString();
+        }
+
         else if (gameObject.GetComponent<Floor>())
         {
             tileDescriptionCanvas.gameObject.SetActive(true);

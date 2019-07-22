@@ -10,7 +10,7 @@ public class Collector : Unit
     [SerializeField]
     Transform goal;
 
-    bool hasCollectable;
+    public bool hasCollectable;
     bool goalSet;
     Collectable collected;
     Gold gold;
@@ -28,6 +28,7 @@ public class Collector : Unit
     {
         if (hasCollectable)
         {
+            //zo smerig
             ResourceDropOff lol = FindObjectOfType<ResourceDropOff>();
             agent.SetDestination(lol.transform.position);
 

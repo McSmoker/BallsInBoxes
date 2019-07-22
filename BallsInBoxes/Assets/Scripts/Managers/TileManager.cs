@@ -5,6 +5,18 @@ using UnityEngine;
 public class TileManager : MonoBehaviour
 {
     CameraMovement playerCamera;
+
+    //Tiles
+    [SerializeField]
+    Floor FloorClass;
+    [SerializeField]
+    FloorSpawner SpawnerClass;
+    [SerializeField]
+    TileEnemySpawner EnemySpawnerClass;
+
+    int buildIndex = 0;
+
+    bool tileDescriptionMode;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +25,11 @@ public class TileManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        TileDescriptionMode();
+    }
+
+    void TileDescriptionMode()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -27,5 +44,23 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Floor GetTileToSpawn()
+    {
+        buildIndex++;
+        if (buildIndex == 1)
+        {
+            return FloorClass;
+        }
+        else if(buildIndex == 2)
+        {
+            return SpawnerClass;
+        }
+        else if(buildIndex == 3)
+        {
+            return EnemySpawnerClass;
+        }
+        return FloorClass;
     }
 }

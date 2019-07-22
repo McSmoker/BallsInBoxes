@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class BuildingGridManager
 {
-    //deze  class handelt alleen SpawningGrids voor het shittie bouwsysteem
-    //Vector3 startPos = new Vector3(-104, 0,-104);
+    
     
     // Start is called before the first frame update
     void Start()
@@ -77,13 +76,13 @@ public class BuildingGridManager
         //loool das wel beetje vies
         //basically pak de positie van geraakte block en plak allemogelijkheden in een array
         //s-wall
-        wallBuildingGrid[0, 0] = new Vector3(hitBlockPosition.x, hitBlockPosition.y +5, hitBlockPosition.z - 5);
+        wallBuildingGrid[0, 0] = new Vector3(hitBlockPosition.x, hitBlockPosition.y +2.5f, hitBlockPosition.z - 5);
         //w-wall
-        wallBuildingGrid[0, 1] = new Vector3(hitBlockPosition.x-5, hitBlockPosition.y + 5, hitBlockPosition.z);
+        wallBuildingGrid[0, 1] = new Vector3(hitBlockPosition.x-5, hitBlockPosition.y + 2.5f, hitBlockPosition.z);
         //e-wall
-        wallBuildingGrid[1, 0] = new Vector3(hitBlockPosition.x + 5, hitBlockPosition.y + 5, hitBlockPosition.z);
+        wallBuildingGrid[1, 0] = new Vector3(hitBlockPosition.x + 5, hitBlockPosition.y + 2.5f, hitBlockPosition.z);
         //n-wall
-        wallBuildingGrid[1, 1] = new Vector3(hitBlockPosition.x , hitBlockPosition.y + 5, hitBlockPosition.z+5);
+        wallBuildingGrid[1, 1] = new Vector3(hitBlockPosition.x , hitBlockPosition.y + 2.5f, hitBlockPosition.z+5);
         return wallBuildingGrid;
     }
 

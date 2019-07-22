@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -63,17 +64,26 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        //start demo
         if (GameState.Instance.IsDemo)
         {
-
-            OriginalSpawnPosition = GameState.Instance.BuildingManager.StartArea.transform.position + new Vector3(0, 2, 0);
             StartDemo();
         }
     }
 
     private void StartDemo()
     {
+        OriginalSpawnPosition = GameState.Instance.BuildingManager.StartArea.transform.position + new Vector3(0, 0, 0);
         SpawnCollector();
+        SpawnStartingCollectables();
+    }
+
+    private void SpawnStartingCollectables()
+    {
+        Collectable ball = Instantiate(GoldClass, OriginalSpawnPosition+ new Vector3(10,0,-10) , new Quaternion(0, 0, 0, 0));
+        //ball.GetComponent<Rigidbody>().AddForce(randomdirection);
+        ball.GetComponent<Rigidbody>().AddForce(this.transform.up * 500);
+        GameState.Instance.Player.CollectablesList.Add(ball);
     }
 
     internal void AddBulletToStorage(Bullet bullet)
@@ -117,7 +127,7 @@ public class Player : MonoBehaviour
     {
         
         OriginalSpawnPosition = GameState.Instance.BuildingManager.DebugArea.transform.position + new Vector3(0, 2, 0);
-        if (CurrencyGold <= CostOfCollector)
+        if (CurrencyGold >= CostOfCollector)
         {
             Idle idle = Instantiate(IdleClass,OriginalSpawnPosition,new Quaternion(0,0,0,0));
             //collector.GetComponents<NavMeshAgent>().
@@ -127,7 +137,7 @@ public class Player : MonoBehaviour
     }
     public void SpawnCollector()
     {
-        Instantiate(CollectorClass, OriginalSpawnPosition, new Quaternion(0, 0, 0, 0));
+        Instantiate(IdleClass, OriginalSpawnPosition, new Quaternion(0, 0, 0, 0));
     }
 
     public void HandleUnitAssignment(string unit)
@@ -187,7 +197,6 @@ public class Player : MonoBehaviour
             UnitList.Remove(alchemist);
             Destroy(alchemist.gameObject);
         }
-
     }
 
     public void HandleWallBuild()

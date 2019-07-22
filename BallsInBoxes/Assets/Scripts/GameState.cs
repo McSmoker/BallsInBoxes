@@ -8,7 +8,7 @@ public class GameState : MonoBehaviour
     public bool IsDemo = false;
     //essentials
     [SerializeField]
-    public MenuManager MenuManager;
+    public DebugMenuManager MenuManager;
     [SerializeField]
     public Player Player;
     [SerializeField]

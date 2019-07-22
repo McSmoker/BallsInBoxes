@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TileEnemySpawner : Floor
 {
+    public int amountToSpawn=10;
+    public int spawned=0;
     [SerializeField]
     Enemy EnemyClass;
 
@@ -22,15 +24,15 @@ public class TileEnemySpawner : Floor
 
     IEnumerator SpawnEnemyEvery2Seconds()
     {
-        while (true)
+        while (spawned!=amountToSpawn)
         {
-            SpawnCollectable();
-
+            SpawnEnemy();
+            spawned++;
             yield return new WaitForSeconds(2f);
         }
     }
 
-    public void SpawnCollectable()
+    public void SpawnEnemy()
     {
         Vector3 randomdirection = new Vector3(Random.Range(0, 500), Random.Range(0, 0), Random.Range(0, 500));
         Enemy enemy = Instantiate(EnemyClass, this.transform.position + new Vector3(0, 3, 0), new Quaternion(0, 0, 0, 0));

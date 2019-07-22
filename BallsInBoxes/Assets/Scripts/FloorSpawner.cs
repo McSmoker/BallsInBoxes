@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FloorSpawner : Floor
 {
-
+    public int amountToSpawn = 100;
+    public int spawned = 0;
     [SerializeField]
     Collectable CollectableClass;
 
@@ -23,10 +24,10 @@ public class FloorSpawner : Floor
 
     IEnumerator SpawnCollectableEvery2Seconds()
     {
-        while (true)
+        while (spawned != amountToSpawn)
         {
+            spawned++;
             SpawnCollectable();
-
             yield return new WaitForSeconds(2f);
         }
     }

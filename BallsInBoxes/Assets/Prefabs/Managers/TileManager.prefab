@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b3153a8992943479c885ae65d14038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FloorClass: {fileID: 7793949080565601473, guid: 0c32c07d2ea0e654daaaf8e7bf5c643d,
+    type: 3}
+  SpawnerClass: {fileID: 3374926523918902720, guid: a1ed80b9843c9b24aa6fa60955a64b46,
+    type: 3}
+  EnemySpawnerClass: {fileID: 7868342977468012062, guid: 7253612c69f29f84290885e85c468c7a,
+    type: 3}
