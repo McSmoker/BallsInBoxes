@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameMenuManager : MonoBehaviour
 {
     [SerializeField]
-    Canvas buildWorldCanvas, buildUnitsCanvas, buildBuildingCanvas;
+    Canvas buildWorldCanvas, buildUnitsCanvas, buildBuildingCanvas, missionCanvas;
     //unitpanel
     [SerializeField]
     Text idleAssignment, collectorAssignment, soldierAssignment, alchemistAssignment;
@@ -81,6 +81,7 @@ public class GameMenuManager : MonoBehaviour
         buildWorldCanvas.gameObject.SetActive(true);
         buildUnitsCanvas.gameObject.SetActive(false);
         buildBuildingCanvas.gameObject.SetActive(false);
+        missionCanvas.gameObject.SetActive(true);
     }
 
     public void OnClickSwitchToUnitTab()
@@ -88,12 +89,23 @@ public class GameMenuManager : MonoBehaviour
         buildWorldCanvas.gameObject.SetActive(false);
         buildUnitsCanvas.gameObject.SetActive(true);
         buildBuildingCanvas.gameObject.SetActive(false);
+        missionCanvas.gameObject.SetActive(false);
     }
+
     public void OnClickSwitchToBuildingBuildTab()
     {
         buildWorldCanvas.gameObject.SetActive(false);
         buildUnitsCanvas.gameObject.SetActive(false);
         buildBuildingCanvas.gameObject.SetActive(true);
+        missionCanvas.gameObject.SetActive(false);
+    }
+
+    public void OnClickSwitchMissionTab()
+    {
+        buildWorldCanvas.gameObject.SetActive(false);
+        buildUnitsCanvas.gameObject.SetActive(false);
+        buildBuildingCanvas.gameObject.SetActive(false);
+        missionCanvas.gameObject.SetActive(false);
     }
 
     public void NewMessage()
