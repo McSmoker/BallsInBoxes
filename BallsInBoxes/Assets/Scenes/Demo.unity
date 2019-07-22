@@ -292,6 +292,8 @@ MonoBehaviour:
     type: 3}
   GameMenuManager: {fileID: 6852638232543600326, guid: 62922deadc6a51d44b7797dadf4b52e8,
     type: 3}
+  MissionManager: {fileID: 6289457330873441328, guid: fc5de1f0067272e47abbd8b862492597,
+    type: 3}
 --- !u!4 &378728826
 Transform:
   m_ObjectHideFlags: 0

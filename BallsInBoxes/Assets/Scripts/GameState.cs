@@ -23,6 +23,8 @@ public class GameState : MonoBehaviour
     public TileManager TileManager;
     [SerializeField]
     public GameMenuManager GameMenuManager;
+    [SerializeField]
+    public MissionManager MissionManager;
 
 
     private static GameState instance;
@@ -50,6 +52,8 @@ public class GameState : MonoBehaviour
             Player.transform.parent = this.transform;
             TileManager = Instantiate(TileManager, instance.transform);
             TileManager.transform.parent = this.transform;
+            MissionManager = Instantiate(MissionManager, instance.transform);
+            MissionManager.transform.parent = this.transform;
         }
         else
         {

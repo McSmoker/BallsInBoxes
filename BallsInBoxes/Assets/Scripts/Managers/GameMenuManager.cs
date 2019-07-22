@@ -14,6 +14,11 @@ public class GameMenuManager : MonoBehaviour
     //messagepanel
     [SerializeField]
     Text messages;
+    //missionpanel
+    [SerializeField]
+    GameObject missionPanel;
+    [SerializeField]
+    MissionButton missionButton;
 
     List<string> messagesList;
     int messageIndex =0;
@@ -53,6 +58,21 @@ public class GameMenuManager : MonoBehaviour
     {
         GameState.Instance.Player.HandleUnitAssignment(clicked);
     }
+    public void OnClickMissionOpen(int missionNumber)
+    {
+
+    }
+
+    public void AddMissionToPanel()
+    {
+        int currentMission = GameState.Instance.Player.activeMissions.Count;
+        MissionButton missionButtonToAdd = Instantiate(missionButton, missionPanel.transform);
+        missionButtonToAdd.GetComponentInChildren<Text>().text = GameState.Instance.Player.missionData[0].Name;
+        
+        missionButtonToAdd = Instantiate(missionButton, missionPanel.transform);
+        missionButtonToAdd.GetComponentInChildren<Text>().text = GameState.Instance.Player.missionData[1].Name;
+        missionButtonToAdd.transform.position += new Vector3(0,-30);
+    }
 
     //state switching
     public void SwitchToBuildingMode()
@@ -78,34 +98,60 @@ public class GameMenuManager : MonoBehaviour
     //canvas switching
     public void OnClickSwitchToWorldBuildTab()
     {
-        buildWorldCanvas.gameObject.SetActive(true);
-        buildUnitsCanvas.gameObject.SetActive(false);
-        buildBuildingCanvas.gameObject.SetActive(false);
-        missionCanvas.gameObject.SetActive(true);
+        if (!buildWorldCanvas.gameObject.activeSelf)
+        {
+            buildWorldCanvas.gameObject.SetActive(true);
+            buildUnitsCanvas.gameObject.SetActive(false);
+            buildBuildingCanvas.gameObject.SetActive(false);
+            missionCanvas.gameObject.SetActive(false);
+        }
+        else
+            buildWorldCanvas.gameObject.SetActive(false);
     }
 
     public void OnClickSwitchToUnitTab()
     {
-        buildWorldCanvas.gameObject.SetActive(false);
-        buildUnitsCanvas.gameObject.SetActive(true);
-        buildBuildingCanvas.gameObject.SetActive(false);
-        missionCanvas.gameObject.SetActive(false);
+        if (!buildUnitsCanvas.gameObject.activeSelf)
+        {
+            buildWorldCanvas.gameObject.SetActive(false);
+            buildUnitsCanvas.gameObject.SetActive(true);
+            buildBuildingCanvas.gameObject.SetActive(false);
+            missionCanvas.gameObject.SetActive(false);
+        }
+        else
+            buildUnitsCanvas.gameObject.SetActive(false);
     }
 
     public void OnClickSwitchToBuildingBuildTab()
     {
-        buildWorldCanvas.gameObject.SetActive(false);
-        buildUnitsCanvas.gameObject.SetActive(false);
-        buildBuildingCanvas.gameObject.SetActive(true);
-        missionCanvas.gameObject.SetActive(false);
+        if (!buildBuildingCanvas.gameObject.activeSelf)
+        {
+            buildWorldCanvas.gameObject.SetActive(false);
+            buildUnitsCanvas.gameObject.SetActive(false);
+            buildBuildingCanvas.gameObject.SetActive(true);
+            missionCanvas.gameObject.SetActive(false);
+        }
+        else
+            buildBuildingCanvas.gameObject.SetActive(false);
     }
 
     public void OnClickSwitchMissionTab()
     {
-        buildWorldCanvas.gameObject.SetActive(false);
-        buildUnitsCanvas.gameObject.SetActive(false);
-        buildBuildingCanvas.gameObject.SetActive(false);
-        missionCanvas.gameObject.SetActive(false);
+        if (!missionCanvas.gameObject.activeSelf)
+        {
+            buildWorldCanvas.gameObject.SetActive(false);
+            buildUnitsCanvas.gameObject.SetActive(false);
+            buildBuildingCanvas.gameObject.SetActive(false);
+            missionCanvas.gameObject.SetActive(true);
+        }
+        else
+            missionCanvas.gameObject.SetActive(false);
+    }
+
+    public void universalCanvasSwitching()
+    {
+        //cry in implementation
+        //moet wel want jesuze
     }
 
     public void NewMessage()

@@ -13,10 +13,10 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       {
-            Clean();
-            GameState.Instance.Player.Balls--;
-        }
+       //{
+       //     Clean();
+       //     GameState.Instance.Player.Balls--;
+       // }
     }
 
     public void Clean()
