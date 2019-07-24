@@ -8,7 +8,7 @@ public class Bullet : Collectable
     public bool isDeadly = true;
     public bool cooling = true;
     private Collector transporter;
-    private bool beingTransported;
+    public bool beingTransported;
     public bool isEnemyBullet;
 
     // Start is called before the first frame update

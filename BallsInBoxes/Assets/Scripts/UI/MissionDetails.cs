@@ -32,6 +32,11 @@ public class MissionDetails : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
+    public void OnClickClaimReward()
+    {
+        GameState.Instance.MissionManager.ClaimMissionReward(missionData);
+    }
+
     // Update is called once per frame
     void Update()
     {

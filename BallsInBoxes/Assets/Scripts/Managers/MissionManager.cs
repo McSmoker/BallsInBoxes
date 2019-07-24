@@ -30,7 +30,6 @@ public class MissionManager : MonoBehaviour
             if (mission.missionData.TypeOfMission == missionEvent)
             {
                 mission.ObjectiveAchieved++;
-                
             }
             if (mission.ObjectiveAchieved == mission.missionData.ObjectiveTotal)
             {
@@ -39,9 +38,9 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    void CompleteMission()
+    internal void ClaimMissionReward(Mission mission)
     {
-
+        Debug.Log(mission.missionData.Reward+"not implemented reward");
     }
     
 

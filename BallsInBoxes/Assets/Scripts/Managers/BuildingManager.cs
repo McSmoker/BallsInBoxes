@@ -78,6 +78,11 @@ public class BuildingManager : MonoBehaviour
     private void SpawnStartArea()
     {
         StartArea = Instantiate(StartArea, new Vector3(-30, 0, -15), new Quaternion(0, 0, 0, 0));
+        //voegt startarea floors toe aan floorlist
+        foreach(Floor floor in StartArea.GetComponentsInChildren<Floor>())
+        {
+            GameState.Instance.Player.FloorsList.Add(floor);
+        }
     }
 
     // Update is called once per frame
@@ -120,8 +125,9 @@ public class BuildingManager : MonoBehaviour
         else if (buildBuildingMode)
         {
             BuildBuildingExecution();
-            if (Input.GetMouseButtonDown(0)) //check if the Q is clicked
+            if (Input.GetMouseButtonDown(0)) //check if the l-Mouse is clicked
             {
+                GameState.Instance.Player.FloorsList.Remove(floorUnderConstruction);
                 Destroy(floorUnderConstruction.gameObject);
                 BuildingStorage buildingStorage = Instantiate(BuildingStorageClass, ghostStorageBuilding.transform.position, new Quaternion(0, 0, 0, 0));
                 Vector3 floorposition = buildingStorage.GetComponentInChildren<Floor>().gameObject.transform.position;
@@ -200,22 +206,19 @@ public class BuildingManager : MonoBehaviour
     //ghostblock.gameobject.transform kan gameobject uit
     void BuildBuildingExecution()
     {
-        if (Input.GetMouseButtonDown(0))
+        RaycastHit hit;
+        Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit)) //check if the ray hit something
         {
-            RaycastHit hit;
-            Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit)) //check if the ray hit something
+            
+            //floor hit
+            if (hit.collider.gameObject.GetComponent<Floor>() != null)
             {
-                
-                //floor hit
-                if (hit.collider.gameObject.GetComponent<Floor>() != null)
-                {
-                    floorUnderConstruction = hit.collider.gameObject.GetComponent<Floor>();
-                    if (ghostStorageBuilding == null)
-                        SpawnGhost(floorUnderConstruction.transform.position);
-                    else
-                        ghostStorageBuilding.transform.position = floorUnderConstruction.transform.position;
-                }
+                floorUnderConstruction = hit.collider.gameObject.GetComponent<Floor>();
+                if (ghostStorageBuilding == null)
+                    SpawnGhost(floorUnderConstruction.transform.position);
+                else
+                    ghostStorageBuilding.transform.position = floorUnderConstruction.transform.position;
             }
         }
     }

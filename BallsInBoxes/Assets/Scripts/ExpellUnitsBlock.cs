@@ -15,7 +15,6 @@ public class ExpellUnitsBlock : MonoBehaviour
         while (OneTime)
         {
             OneTime = false;
-            Debug.Log("countdownStart");
             yield return new WaitForSeconds(1f);
         }
         Destroy(gameObject);

@@ -52,15 +52,20 @@ public class Collector : Unit
             if (collision.gameObject.GetComponent<Gold>())
             {
                 gold = collision.gameObject.GetComponent<Gold>();
-                gold.Transporting(this);
-                hasCollectable = true;
+                if (!gold.beingTransported)
+                {
+                    gold.Transporting(this);
+                    hasCollectable = true;
+                }
             }
             else if (collision.gameObject.GetComponent<Bullet>())
             {
-                Debug.Log("start collecting bullet");
                 bullet = collision.gameObject.GetComponent<Bullet>();
-                bullet.Transporting(this);
-                hasCollectable = true;
+                if (!bullet.beingTransported)
+                {
+                    bullet.Transporting(this);
+                    hasCollectable = true;
+                }
             }
         }
     }
@@ -83,10 +88,14 @@ public class Collector : Unit
                 hasCollectable = false;
                 //wat een viez
                 bullet = null;
-
+            }
+            else
+            {
+                //voorkomt bug met hasCollectable = true als hij dat niet moet zijn
+                hasCollectable = false;
             }
         }
-        else
+        else if(other.gameObject.GetComponent<ExpellUnitsBlock>())
         {
             //remove units from buildings
             GameState.Instance.Player.UnitList.Remove(this);

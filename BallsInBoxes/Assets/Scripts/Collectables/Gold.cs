@@ -5,7 +5,7 @@ using UnityEngine;
 public class Gold : Collectable
 {
     Collector transporter;
-    bool beingTransported = false;
+    public bool beingTransported = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +26,9 @@ public class Gold : Collectable
 
     public void Transporting(Collector collector)
     {
+        beingTransported = true;
         this.transporter = collector;
         GameState.Instance.Player.CollectablesList.Remove(this);
-        beingTransported = true;
         this.GetComponent<Rigidbody>().isKinematic = false;
     }
     public void Collect()

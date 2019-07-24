@@ -53,6 +53,7 @@ public class GameMenuManager : MonoBehaviour
         collectorAssignment.text = "Collector: " + GameState.Instance.Player.CollectorsList.Count + "/" + GameState.Instance.Player.UnitList.Count;
         soldierAssignment.text = "Soldier: " + GameState.Instance.Player.SoldierList.Count + "/" + GameState.Instance.Player.UnitList.Count;
         alchemistAssignment.text = "Alchemist: " + GameState.Instance.Player.AlchemistList.Count + "/" + GameState.Instance.Player.UnitList.Count;
+        Debug.Log(GameState.Instance.Player.FloorsList.Count);
 
     }
     //unit assignemnt

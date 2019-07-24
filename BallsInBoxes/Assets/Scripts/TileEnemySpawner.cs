@@ -12,7 +12,7 @@ public class TileEnemySpawner : Floor
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("SpawnEnemyEvery2Seconds");
+        StartCoroutine("SpawnEnemyEvery10Seconds");
 
     }
 
@@ -22,13 +22,13 @@ public class TileEnemySpawner : Floor
 
     }
 
-    IEnumerator SpawnEnemyEvery2Seconds()
+    IEnumerator SpawnEnemyEvery10Seconds()
     {
         while (spawned!=amountToSpawn)
         {
             SpawnEnemy();
             spawned++;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(10f);
         }
     }
 

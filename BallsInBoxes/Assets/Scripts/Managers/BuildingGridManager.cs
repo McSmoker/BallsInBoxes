@@ -91,12 +91,28 @@ public class BuildingGridManager
         //bug werkt alleen voor de naastliggenden (dus1,3,5,7)
         //wat voor nu prima is
         //als hitpoint niet een blokje is dan is waarde 0,0,0,0(dus raycast raaktniks)
+
+        //een manier om al bestaande walls en floors niet dubbel te bouwe
+        //gebruik de lists walllist en floorlist
+        List<Vector3> existingFloorPositions = new List<Vector3>();
+
+        foreach(Floor floor in GameState.Instance.Player.FloorsList)
+        {
+            existingFloorPositions.Add(floor.transform.position);
+        }
+
+
+        //kijken wat het dichtstebijis
         List<float> distances = new List<float>();
         List<Vector3> positions = new List<Vector3>();
         foreach ( Vector3 gridPosition in hitGrid)
         {
-            distances.Add(Vector3.Distance(gridPosition, hitpoint));
-            positions.Add(gridPosition);
+            //gridposition is niet al een floor
+            if (!existingFloorPositions.Contains(gridPosition))
+            {
+                distances.Add(Vector3.Distance(gridPosition, hitpoint));
+                positions.Add(gridPosition);
+            }
         }
         int closestIndex = distances.IndexOf(distances.Min());
         
