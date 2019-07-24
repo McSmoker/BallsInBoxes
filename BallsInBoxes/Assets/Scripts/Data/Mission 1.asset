@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Mission 1
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
-  name: Explore The Land
-  objective: Click explore button and explore the land
+  missionName: Explore The Land
+  description: Use the explore tab to discover a new piece of land
+  objective: Explore Tile
+  objectiveTotal: 1
   reward: 10 Gold
+  typeOfMission: 0

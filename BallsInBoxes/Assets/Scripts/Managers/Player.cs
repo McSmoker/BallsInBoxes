@@ -55,8 +55,6 @@ public class Player : MonoBehaviour
     public List<Floor> FloorsList;
     public List<Wall> WallsList;
     public List<BuildingStorage> BuildingStorageList;
-    //MissionList
-    public List<MissionData> activeMissions;
 
     
 
@@ -75,7 +73,17 @@ public class Player : MonoBehaviour
         if (GameState.Instance.IsDemo)
         {
             StartDemo();
+            StartMissionVies();
         }
+    }
+
+    private void StartMissionVies()
+    {
+        //later in missionmanager zelf doen
+        //dit is een redelijke aanroep
+
+        GameState.Instance.MissionManager.StartMission(0);
+        GameState.Instance.MissionManager.StartMission(1);
     }
 
     private void StartDemo()
@@ -83,8 +91,6 @@ public class Player : MonoBehaviour
         OriginalSpawnPosition = GameState.Instance.BuildingManager.StartArea.transform.position + new Vector3(0, 0, 0);
         SpawnCollector();
         SpawnStartingCollectables();
-        //later in missionmanager zelf doen
-        GameState.Instance.GameMenuManager.AddMissionToPanel();
     }
 
     private void SpawnStartingCollectables()

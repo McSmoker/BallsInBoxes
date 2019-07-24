@@ -86,12 +86,13 @@ public class BuildingManager : MonoBehaviour
         if (buildFloorMode)
         {
             BuildFloorModeExecution();
-            if (Input.GetMouseButtonDown(0)) //check if the Q is clicked
+            if (Input.GetMouseButtonDown(0)) //check if the L-Mouse is clicked
             {
                 Floor FloorToSpawn = GameState.Instance.TileManager.GetTileToSpawn();
                 Floor floor = Instantiate(FloorToSpawn, ghostBlockFloor.transform.position, new Quaternion(0, 0, 0, 0));
                 GameState.Instance.Player.FloorsList.Add(floor);
                 buildFloorMode = false;
+                GameState.Instance.MissionManager.ReceiveMissionEvent(MissionEvent.Explore);
             }
 
         }

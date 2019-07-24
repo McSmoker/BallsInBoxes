@@ -16,9 +16,11 @@ public class GameMenuManager : MonoBehaviour
     Text messages;
     //missionpanel
     [SerializeField]
-    GameObject missionPanel;
+    GameObject missionPanelList;
     [SerializeField]
     MissionButton missionButton;
+    [SerializeField]
+    MissionDetails missionPanelOpen;
 
     List<string> messagesList;
     int messageIndex =0;
@@ -58,20 +60,28 @@ public class GameMenuManager : MonoBehaviour
     {
         GameState.Instance.Player.HandleUnitAssignment(clicked);
     }
-    public void OnClickMissionOpen(int missionNumber)
-    {
 
+    public void OnClickMissionOpen(Mission mission)
+    {
+        missionPanelOpen.gameObject.SetActive(true);
+        missionPanelOpen.missionData = mission;
+        missionPanelOpen.UpdateMissionInfo();
     }
 
-    public void AddMissionToPanel()
+    public void AddMissionToPanel(Mission mission)
     {
-        int currentMission = GameState.Instance.Player.activeMissions.Count;
-        MissionButton missionButtonToAdd = Instantiate(missionButton, missionPanel.transform);
-        missionButtonToAdd.GetComponentInChildren<Text>().text = GameState.Instance.Player.missionData[0].Name;
-        
-        missionButtonToAdd = Instantiate(missionButton, missionPanel.transform);
-        missionButtonToAdd.GetComponentInChildren<Text>().text = GameState.Instance.Player.missionData[1].Name;
-        missionButtonToAdd.transform.position += new Vector3(0,-30);
+        //kan ook wel wat mooier he
+        MissionButton missionButtonToAdd = Instantiate(missionButton, missionPanelList.transform);
+        missionButtonToAdd.missionData = mission;
+        if (GameState.Instance.MissionManager.activeMissions.Count == 1)
+        {
+
+        }
+        else
+        {
+            //move down
+            missionButtonToAdd.transform.position += new Vector3(0, -30);
+        }
     }
 
     //state switching

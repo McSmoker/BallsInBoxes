@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Mission 2
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
-  name: Build a storage
-  objective: 'Use the building tab to open the building tab and build a storage building. '
+  missionName: Build a storage
+  description: 'Use the building tab to open the building tab and build a storage
+    building. '
+  objective: Build Storage
+  objectiveTotal: 1
   reward: 10 Gold
+  typeOfMission: 1
