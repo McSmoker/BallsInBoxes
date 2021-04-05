@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5683496828776018745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5683496828776018747}
+  - component: {fileID: 5683496828776018744}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5683496828776018747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5683496828776018745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 78, y: 374, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5683496828776018744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5683496828776018745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1180e1be54e50cc489aff7c5059ba1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnerClass: {fileID: 5752735278690052012, guid: edaa888dc4f547643933dfe5ae666125,
+    type: 3}
+  CollectorClass: {fileID: 201154026823839225, guid: ae31e212a8a8ec147b1e4c39c857a612,
+    type: 3}
+  IdleClass: {fileID: 2826123019886018424, guid: 116250496653a1845bbb365bbd4d8fbf,
+    type: 3}
+  SoldierClass: {fileID: 4400283738094262251, guid: 226ede5bf5a26424dbefdb333ab2035a,
+    type: 3}
+  AlchemistClass: {fileID: 675525957105523445, guid: b4c5298a540f79e4b831f4a377bd58eb,
+    type: 3}
+  GoldClass: {fileID: 1084574322321388843, guid: 708a18dc76cf4ee4293eaf118fcef2c9,
+    type: 3}
+  BulletClass: {fileID: 4319974418281041994, guid: d1fc3d6e410a1f34cac3bc524cf8c0da,
+    type: 3}
+  missionData:
+  - {fileID: 11400000, guid: f715171365d5ea842a2056cd01f71ac7, type: 2}
+  - {fileID: 11400000, guid: d123b84d02903d9409bdb027784a358d, type: 2}
+  OriginalSpawnPosition: {x: -3, y: 2.25, z: 10}
+  CurrencyGold: 0
+  CurrencyBullet: 0
+  CollectablesList: []
+  GoldList: []
+  BulletList: []
+  SoldierList: []
+  CollectorsList: []
+  AlchemistList: []
+  UnitList: []
+  IdleList: []
+  FloorsList: []
+  WallsList: []
+  BuildingStorageList: []
+  DropOffList: []
+  CostOfFloor: 10
+  CostOfWall: 1
+  CostOfCollector: 10
+  CannonLocations: []
